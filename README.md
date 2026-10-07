@@ -31,13 +31,14 @@ An envelope with the signature and the signed text side by side:
 - `kid`: the signing key, listed in `keys.json`. Role `ci` signs normal releases; role `yedek` is an offline backup key.
 - `sig`: Ed25519 signature (base64url) over the UTF-8 bytes of `payload`.
 - `payload`: a JSON string with `format`, `seq` (only ever increases), `content` (the release whose packs this list
-  points to; differs from `seq` after a rollback), `published`, `mirrors` (base URLs), `revoked`, `langs` and
-  `embedded`.
+  points to; differs from `seq` after a rollback or a key revocation), `published`, `mirrors` (base URLs), `revoked`,
+  `langs` and `embedded`.
 - `langs[]`: `code`, `name` (in its own language), `dir`, `script`, `ver`, `minBuild`, `path`, `bytes`, `rawBytes`,
   `sha256`, `keys` and `coverage` (percent of texts translated, per area).
 - `embedded[]`: same fields. English is listed here: the panel ships it, and devices do not install it as a pack.
 - `revoked`: `null`, or a revocation list signed by the offline backup key. A device that sees it never accepts the
-  listed keys again.
+  listed keys again. The list that introduces a revocation is signed by the backup key and points to a release the
+  maintainer chose as safe, not automatically to the one that was live.
 
 A pack is `{ "<key>": { "t": "<text>", "src": "<first 8 hex of sha256 of the Turkish source>", "h": [[src, text], ...] } }`.
 `h` keeps up to three older translations for panels that still show the older Turkish text.
