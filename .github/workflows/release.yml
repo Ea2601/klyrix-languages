@@ -1,0 +1,39 @@
+# Creates the release for a published language list. Triggered by the lp-<n> tag that the translation pipeline pushes.
+# No secrets: the tag's index.json must carry a valid signature from a key in keys.json, and every pack it points to must
+# match its size and sha256. The release is marked "latest", so devices find the list at
+# releases/latest/download/index.json.
+name: Release
+
+on:
+  push:
+    tags: ['lp-*']
+
+permissions: {}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+      - name: Verify signature and packs
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          [[ "$TAG" =~ ^lp-[0-9]+$ ]] || { echo "::error::unexpected tag: $TAG"; exit 1; }
+          node .github/verify.mjs index.json keys.json --paketler . --etiket "$TAG"
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          files=(index.json)
+          if [ -d "$TAG" ]; then files+=("$TAG"/*.json.gz); fi
+          gh release create "$TAG" "${files[@]}" --repo "$GITHUB_REPOSITORY" --title "Language packs $TAG" --notes-file .github/release-notes.md --latest --verify-tag

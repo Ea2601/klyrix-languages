@@ -1,0 +1,17 @@
+{
+ "format": 1,
+ "keys": [
+  {
+   "kid": "ci-a7f25b17",
+   "rol": "ci",
+   "raw": "-ywuEULkJsaJrlQj7oFoASQpDu-jENbNavjy-0cUOuc",
+   "pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA+ywuEULkJsaJrlQj7oFoASQpDu+jENbNavjy+0cUOuc=\n-----END PUBLIC KEY-----\n"
+  },
+  {
+   "kid": "yedek-d95a3537",
+   "rol": "yedek",
+   "raw": "N1c451pCCauUBmGrsG0J4RDOxmPMl5qzJVzU1Pnl20U",
+   "pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAN1c451pCCauUBmGrsG0J4RDOxmPMl5qzJVzU1Pnl20U=\n-----END PUBLIC KEY-----\n"
+  }
+ ]
+}
