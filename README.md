@@ -7,6 +7,8 @@ Every other language is a pack in this repository, and a device downloads a pack
 during first setup, or for its once-a-day check of a pack that is already installed. The request carries no device
 information. GitHub sees your IP address, and the download counts of this repository are public.
 
+Panel support for downloading packs is still being built; until it ships, no device downloads anything from here.
+
 Do not edit this repository by hand. A pipeline in a private translation repository checks every uploaded translation,
 builds the packs, signs the list and pushes it here.
 
